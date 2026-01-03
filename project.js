@@ -1,200 +1,199 @@
-// BAGIAN 1: VARIABEL (TEMPAT MENYIMPAN DATA)
+// BAGIAN 1: VARIABEL (TEMPAT SIMPAN DATA)
 
-var skorKuis = 0;
-var skorMath = 0;
-var skorMemory = 0;
+let skor = 0;               
+let skorMath = 0;           
+let skorMemory = 0;        
+let nomorSoal = 0;          
+let jawabanCorrectMath = 0; 
+let kartu1 = null;          
+let kartu2 = null;          
 
-var angka1 = 0;
-var angka2 = 0;
-var jawabanBenar = 0;
-
-var kartu1 = null;
-var kartu2 = null;
-var nomorSoal = 0;
-
-
-// FUNGSI NAVIGASI HALAMAN
-
-function keBeranda() {
-    document.getElementById("halamanBeranda").style.display = "block";
-    document.getElementById("halamanTentang").classList.remove("active");
-    tutupGame();
-}
-
-function keTentang() {
-    document.getElementById("halamanBeranda").style.display = "none";
-    document.getElementById("halamanTentang").classList.add("active");
-}
-
-// BAGIAN 2: DATA SOAL KUIS
-var soalKuis = [
-    {
-        soal: "Apa ibu kota Indonesia?",
-        pilihan: ["Jakarta", "Bandung", "Surabaya"],
-        benar: "Jakarta"
-    },
-    {
-        soal: "Hewan apa yang disebut Raja Hutan?",
-        pilihan: ["Harimau", "Singa", "Gajah"],
-        benar: "Singa"
-    },
-    {
-        soal: "Berapa warna pelangi?",
-        pilihan: ["5", "6", "7"],
-        benar: "7"
-    },
-    {
-        soal: "Planet terdekat dengan Matahari?",
-        pilihan: ["Venus", "Merkurius", "Mars"],
-        benar: "Merkurius"
-    },
-    {
-        soal: "Berapa sisi pada segitiga?",
-        pilihan: ["2", "3", "4"],
-        benar: "3"
-    }
+// Data soal kuis
+let soal = [
+    ["Apa ibu kota Indonesia?", "Jakarta", "Bandung", "Surabaya", "Jakarta"],
+    ["Hewan apa yang disebut Raja Hutan?", "Harimau", "Singa", "Gajah", "Singa"],
+    ["Berapa warna pelangi?", "5", "6", "7", "7"],
+    ["Planet terdekat dengan Matahari?", "Venus", "Merkurius", "Mars", "Merkurius"],
+    ["Berapa sisi pada segitiga?", "2", "3", "4", "3"]
 ];
 
-// BAGIAN 3: FUNGSI BUKA/TUTUP GAME
-function bukaKuis() {
-    document.getElementById("menu").style.display = "none";
-    document.getElementById("quizGame").classList.add("active");
-    skorKuis = 0;
+// BAGIAN 2: FUNGSI PINDAH HALAMAN
+
+function tampilBeranda() {
+    document.getElementById("beranda").style.display = "block";
+    document.getElementById("tentang").style.display = "none";
+    document.getElementById("kuis").style.display = "none";
+    document.getElementById("math").style.display = "none";
+    document.getElementById("memory").style.display = "none";
+}
+
+function tampilTentang() {
+    document.getElementById("beranda").style.display = "none";
+    document.getElementById("tentang").style.display = "block";
+    document.getElementById("kuis").style.display = "none";
+    document.getElementById("math").style.display = "none";
+    document.getElementById("memory").style.display = "none";
+}
+
+// BAGIAN 3: FUNGSI GAME KUIS
+
+function mulaiKuis() {
+    document.getElementById("beranda").style.display = "none";
+    document.getElementById("kuis").style.display = "block";
+    
+    skor = 0;
     nomorSoal = 0;
-    tampilkanSoalKuis();
+    document.getElementById("skorKuis").textContent = "0";
+    
+    tampilSoal();
 }
 
-function bukaMath() {
-    document.getElementById("menu").style.display = "none";
-    document.getElementById("mathGame").classList.add("active");
-    skorMath = 0;
-    document.getElementById("mathScore").innerHTML = skorMath;
-    buatSoalBaru();
-}
-
-function bukaMemory() {
-    document.getElementById("menu").style.display = "none";
-    document.getElementById("memoryGame").classList.add("active");
-    skorMemory = 0;
-    document.getElementById("memoryScore").innerHTML = skorMemory;
-    buatKartu();
-}
-
-function tutupGame() {
-    document.getElementById("menu").style.display = "grid";
-    document.getElementById("quizGame").classList.remove("active");
-    document.getElementById("mathGame").classList.remove("active");
-    document.getElementById("memoryGame").classList.remove("active");
-}
-
-// BAGIAN 4: GAME KUIS
-function tampilkanSoalKuis() {
+function tampilSoal() {
     if (nomorSoal >= 5) {
-        var hasilDiv = document.getElementById("quizOptions");
-        hasilDiv.innerHTML = '<div class="result correct" style="font-size: 1.5em; padding: 30px;">🎉 Selesai!<br>Skor: ' + skorKuis + '/5</div>';
+        document.getElementById("pilihanJawaban").innerHTML = 
+            '<div style="background: #d4edda; padding: 20px; border-radius: 10px; text-align: center; font-size: 1.3em;">🎉 Selesai!<br>Skor Akhir: ' + skor + '/5</div>';
+        return;
+    }
+
+    let soalSekarang = soal[nomorSoal];
+    document.getElementById("soalKuis").textContent = "Soal " + (nomorSoal + 1) + ": " + soalSekarang[0];
+    
+    let html = "";
+    html += '<button class="tombol" onclick="cekJawaban(\'' + soalSekarang[1] + '\')">' + soalSekarang[1] + '</button>';
+    html += '<button class="tombol" onclick="cekJawaban(\'' + soalSekarang[2] + '\')">' + soalSekarang[2] + '</button>';
+    html += '<button class="tombol" onclick="cekJawaban(\'' + soalSekarang[3] + '\')">' + soalSekarang[3] + '</button>';
+    document.getElementById("pilihanJawaban").innerHTML = html;
+}
+
+function cekJawaban(jawabanUser) {
+    let jawabanBenar = soal[nomorSoal][4];
+    
+    if (jawabanUser == jawabanBenar) {
+        alert("✅ Benar!");
+        skor = skor + 1;
+    } else {
+        alert("❌ Salah! Jawabannya: " + jawabanBenar);
+    }
+    
+    document.getElementById("skorKuis").textContent = skor;
+    nomorSoal = nomorSoal + 1;
+    tampilSoal();
+}
+
+
+// BAGIAN 4: FUNGSI GAME MATEMATIKA
+
+function mulaiMath() {
+    document.getElementById("beranda").style.display = "none";
+    document.getElementById("math").style.display = "block";
+    
+    skorMath = 0;
+    document.getElementById("skorMath").textContent = "0";
+    
+    buatSoalMath();
+}
+
+function buatSoalMath() {
+    let angka1 = Math.floor(Math.random() * 10) + 1;
+    let angka2 = Math.floor(Math.random() * 10) + 1;
+    
+    jawabanCorrectMath = angka1 + angka2;
+    document.getElementById("soalMath").textContent = angka1 + " + " + angka2 + " = ?";
+    
+    document.getElementById("jawabanMath").value = "";
+    document.getElementById("hasilMath").innerHTML = "";
+}
+
+function cekJawabanMath() {
+    let jawabanUser = document.getElementById("jawabanMath").value;
+    
+    if (jawabanUser == "") {
+        alert("Isi jawabannya dulu ya!");
         return;
     }
     
-    var soalSekarang = soalKuis[nomorSoal];
-    document.getElementById("quizQuestion").innerHTML = "Soal " + (nomorSoal + 1) + " dari 5<br>" + soalSekarang.soal;
-    
-    var pilihanDiv = document.getElementById("quizOptions");
-    pilihanDiv.innerHTML = ""; 
-
-    soalSekarang.pilihan.forEach(function(opt) {
-        var div = document.createElement("div");
-        div.className = "quiz-option";
-        div.innerHTML = opt;
-        div.onclick = function() { cekJawabanKuis(opt); };
-        pilihanDiv.appendChild(div);
-    });
-}
-
-function cekJawabanKuis(jawaban) {
-    var jwbBenar = soalKuis[nomorSoal].benar;
-    if (jawaban === jwbBenar) {
-        alert("✅ Benar!");
-        skorKuis++;
+    if (parseInt(jawabanUser) == jawabanCorrectMath) {
+        skorMath = skorMath + 1;
+        document.getElementById("skorMath").textContent = skorMath;
+        document.getElementById("hasilMath").innerHTML = 
+            '<div style="background: #d4edda; padding: 15px; border-radius: 10px; margin-top: 10px; text-align: center;">🎉 Benar!</div>';
     } else {
-        alert("❌ Salah! Jawabannya: " + jwbBenar);
+        document.getElementById("hasilMath").innerHTML = 
+            '<div style="background: #f8d7da; padding: 15px; border-radius: 10px; margin-top: 10px; text-align: center;">❌ Salah! Jawabannya: ' + jawabanCorrectMath + '</div>';
     }
     
-    document.getElementById("quizScore").innerHTML = skorKuis + "/5";
-    nomorSoal++;
-    setTimeout(tampilkanSoalKuis, 500);
+    setTimeout(buatSoalMath, 2000);
 }
 
-// BAGIAN 5: GAME MATEMATIKA
-function buatSoalBaru() {
-    angka1 = Math.floor(Math.random() * 10) + 1;
-    angka2 = Math.floor(Math.random() * 10) + 1;
-    jawabanBenar = angka1 + angka2;
-    document.getElementById("mathQuestion").innerHTML = angka1 + " + " + angka2 + " = ?";
-    document.getElementById("mathInput").value = "";
-    document.getElementById("mathResult").innerHTML = "";
-}
+// BAGIAN 5: FUNGSI GAME MEMORY
 
-function cekJawaban() {
-    var jawabanUser = document.getElementById("mathInput").value;
-    if (jawabanUser === "") return alert("Isi jawabannya dulu ya!");
+function mulaiMemory() {
+    document.getElementById("beranda").style.display = "none";
+    document.getElementById("memory").style.display = "block";
     
-    if (parseInt(jawabanUser) === jawabanBenar) {
-        skorMath++;
-        document.getElementById("mathScore").innerHTML = skorMath;
-        document.getElementById("mathResult").innerHTML = '<div class="result correct">🎉 Benar!</div>';
-    } else {
-        document.getElementById("mathResult").innerHTML = '<div class="result wrong">❌ Salah. Jawabannya: ' + jawabanBenar + '</div>';
-    }
-    setTimeout(buatSoalBaru, 2000);
+    skorMemory = 0;
+    document.getElementById("skorMemory").textContent = "0";
+    
+    buatKartu();
 }
 
-// BAGIAN 6: GAME MEMORY
 function buatKartu() {
-    var emoji = ["🍎", "🍎", "🍌", "🍌", "🍇", "🍇", "🍊", "🍊"];
-    emoji.sort(() => Math.random() - 0.5);
+    let emoji = ["🍎", "🍎", "🍌", "🍌", "🍇", "🍇", "🍊", "🍊"];
+    emoji.sort(function() { return Math.random() - 0.5; });
     
-    var grid = document.getElementById("memoryGrid");
-    grid.innerHTML = "";
-    
-    for (var i = 0; i < 8; i++) {
-        var kartu = document.createElement("div");
-        kartu.className = "memory-card";
-        kartu.innerHTML = "?";
-        kartu.setAttribute("data-emoji", emoji[i]);
-        kartu.onclick = function() { klikKartu(this); };
-        grid.appendChild(kartu);
+    let html = "";
+    for (let i = 0; i < 8; i++) {
+        html += '<div class="kartu" id="kartu' + i + '" data-emoji="' + emoji[i] + '" onclick="klikKartu(' + i + ')">?</div>';
     }
-    kartu1 = kartu2 = null;
+    document.getElementById("kartuMemory").innerHTML = html;
+    
+    kartu1 = null;
+    kartu2 = null;
 }
 
-function klikKartu(kartu) {
-    if (kartu.classList.contains("flipped") || (kartu1 && kartu2)) return;
+function klikKartu(nomor) {
+    let kartu = document.getElementById("kartu" + nomor);
     
-    kartu.classList.add("flipped");
-    kartu.innerHTML = kartu.getAttribute("data-emoji");
+    if (kartu.classList.contains("buka") || kartu2 != null) {
+        return;
+    }
     
-    if (!kartu1) {
+    kartu.classList.add("buka");
+    kartu.textContent = kartu.getAttribute("data-emoji");
+    
+    if (kartu1 == null) {
         kartu1 = kartu;
     } else {
         kartu2 = kartu;
-        setTimeout(cekKartu, 1000);
+        setTimeout(cekCocok, 1000);
     }
 }
 
-function cekKartu() {
-    if (kartu1.getAttribute("data-emoji") === kartu2.getAttribute("data-emoji")) {
-        skorMemory++;
-        document.getElementById("memoryScore").innerHTML = skorMemory;
-        if (skorMemory === 4) alert("🎉 Selamat! Kamu menang!");
+function cekCocok() {
+    let emoji1 = kartu1.getAttribute("data-emoji");
+    let emoji2 = kartu2.getAttribute("data-emoji");
+    
+    if (emoji1 == emoji2) {
+        skorMemory = skorMemory + 1;
+        document.getElementById("skorMemory").textContent = skorMemory;
+        
+        if (skorMemory == 4) {
+            alert("🎉 Selamat! Kamu menang!");
+        }
     } else {
-        kartu1.classList.remove("flipped");
-        kartu2.classList.remove("flipped");
-        kartu1.innerHTML = kartu2.innerHTML = "?";
+        kartu1.classList.remove("buka");
+        kartu2.classList.remove("buka");
+        kartu1.textContent = "?";
+        kartu2.textContent = "?";
     }
-    kartu1 = kartu2 = null;
+    
+    kartu1 = null;
+    kartu2 = null;
 }
 
-// Event Listener Enter
-document.getElementById("mathInput").addEventListener("keypress", function(e) {
-    if (e.key === "Enter") cekJawaban();
+// Listener untuk input Enter di Matematika
+document.getElementById("jawabanMath").addEventListener("keypress", function(e) {
+    if (e.key == "Enter") {
+        cekJawabanMath();
+    }
 });
