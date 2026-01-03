@@ -1,4 +1,3 @@
-
 // BAGIAN 1: VARIABEL (TEMPAT MENYIMPAN DATA)
 
 var skorKuis = 0;
