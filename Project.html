@@ -3,95 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Belajar Seru SD</title>
-    <link rel="stylesheet" href="Project.css">
+    <title>Game Belajar Anak</title>
+    <link rel="stylesheet" href="project.css">
 </head>
 <body>
-    <div class="navbar">
-        <div class="navbar-logo">🎓 Learning Game For Kids</div>
-        <div class="navbar-menu">
-            <div class="navbar-item" onclick="keBeranda()">Beranda</div>
-            <div class="navbar-item" onclick="keTentang()">Tentang</div>
+
+    <div class="menu-atas">
+        <div class="logo">🎓 Game Belajar</div>
+        <div>
+            <button class="tombol-menu" onclick="tampilBeranda()">Beranda</button>
+            <button class="tombol-menu" onclick="tampilTentang()">Tentang</button>
         </div>
     </div>
 
-    <div class="container">
-        <div id="halamanBeranda">
-            <header>
-                <h1>🎓 Learning Game For Kids</h1>
-                <p>Belajar sambil bermain itu menyenangkan!</p>
-            </header>
-
-            <div class="menu" id="menu">
-                <div class="menu-card" onclick="bukaKuis()">
-                    <div class="icon">📚</div>
-                    <h3>Kuis Cepat</h3>
-                    <p>Tes pengetahuanmu!</p>
+    <div id="beranda">
+        <div class="kotak">
+            <h1>🎓 Game Belajar Anak SD</h1>
+            <p style="text-align: center;">Pilih game yang ingin kamu mainkan!</p>
+            <div style="text-align: center;">
+                <div class="tombol-game" onclick="mulaiKuis()">
+                    <div class="emoji-besar">📚</div>
+                    <h3>Kuis</h3>
+                    <p>Tes pengetahuan</p>
                 </div>
-                <div class="menu-card" onclick="bukaMath()">
-                    <div class="icon">➕</div>
+                <div class="tombol-game" onclick="mulaiMath()">
+                    <div class="emoji-besar">➕</div>
                     <h3>Matematika</h3>
-                    <p>Latihan hitung-hitungan</p>
+                    <p>Hitung-hitungan</p>
                 </div>
-                <div class="menu-card" onclick="bukaMemory()">
-                    <div class="icon">🎮</div>
+                <div class="tombol-game" onclick="mulaiMemory()">
+                    <div class="emoji-besar">🎮</div>
                     <h3>Ingat-ingatan</h3>
-                    <p>Cocokkan kartu!</p>
+                    <p>Cocokkan kartu</p>
                 </div>
             </div>
-
-            <div class="game-area" id="quizGame">
-                <button class="back-btn" onclick="tutupGame()">← Kembali</button>
-                <h2>Kuis Pengetahuan Umum</h2>
-                <div class="score">Skor: <span id="quizScore">0</span>/5</div>
-                <div class="question-box" id="quizQuestion"></div>
-                <div id="quizOptions"></div>
-            </div>
-
-            <div class="game-area" id="mathGame">
-                <button class="back-btn" onclick="tutupGame()">← Kembali</button>
-                <h2>Latihan Matematika</h2>
-                <div class="score">Skor: <span id="mathScore">0</span></div>
-                <div class="question-box" id="mathQuestion"></div>
-                <div class="math-container">
-                    <input type="number" id="mathInput" class="math-input" placeholder="?">
-                    <button class="check-btn" onclick="cekJawaban()">Cek</button>
-                </div>
-                <div id="mathResult"></div>
-            </div>
-
-            <div class="game-area" id="memoryGame">
-                <button class="back-btn" onclick="tutupGame()">← Kembali</button>
-                <h2>Permainan Ingat-ingatan</h2>
-                <div class="score">Pasangan: <span id="memoryScore">0</span>/4</div>
-                <div class="memory-grid" id="memoryGrid"></div>
-            </div>
         </div>
-
-        <div class="tentang-page" id="halamanTentang">
-            <button class="back-btn" onclick="keBeranda()">← Kembali</button>
-            <h2>📖 Tentang Platform Belajar Seru SD</h2>
-            
-            <p><strong>Latar Belakang</strong></p>
-            <p>Di era digital saat ini, anak-anak sekolah dasar membutuhkan cara belajar yang menyenangkan dan menarik. Belajar dengan cara yang monoton seringkali membuat anak-anak cepat bosan dan kehilangan minat untuk belajar.</p>
-            
-            <p>Oleh karena itu, kami membuat website "Platform Belajar Interaktif untuk Anak SD" yang dirancang khusus untuk membantu anak-anak belajar dengan cara yang menyenangkan.</p>
-
-            <p style="margin-top: 30px;"><strong>Fitur-fitur:</strong></p>
-            <p>🎯 <strong>Kuis Cepat</strong> - Tes pengetahuan umum dengan berbagai soal menarik</p>
-            <p>➕ <strong>Matematika</strong> - Latihan hitung-hitungan untuk meningkatkan kemampuan matematika</p>
-            <p>🎮 <strong>Ingat-ingatan</strong> - Permainan mencocokkan kartu untuk melatih daya ingat</p>
-        </div>
-        
-        
     </div>
 
-    <footer>
-      
-            <p>© 2026 Belajar Seru SD</p>
-            <p>Dibuat dengan ❤️ untuk anak-anak Indonesia</p>
-       
-    </footer>
-    <script src="Project.js"></script>
+    <div id="tentang" style="display: none;">
+        <div class="kotak">
+            <h1>📖 Tentang Game Belajar</h1>
+            <p><strong>Latar Belakang</strong></p>
+            <p>Website ini dibuat untuk membantu anak-anak belajar dengan cara yang menyenangkan. Belajar tidak harus membosankan!</p>
+            <p style="margin-top: 30px;"><strong>Fitur-fitur:</strong></p>
+            <p>🎯 <strong>Kuis</strong> - Tes pengetahuan umum</p>
+            <p>➕ <strong>Matematika</strong> - Latihan hitung-hitungan</p>
+            <p>🎮 <strong>Ingat-ingatan</strong> - Cocokkan kartu</p>
+        </div>
+    </div>
+
+    <div id="kuis" style="display: none;">
+        <div class="kotak">
+            <button class="tombol" onclick="tampilBeranda()">← Kembali</button>
+            <h1>Kuis Pengetahuan</h1>
+            <div class="skor">Skor: <span id="skorKuis">0</span>/5</div>
+            <div class="kotak-soal" id="soalKuis"></div>
+            <div id="pilihanJawaban"></div>
+        </div>
+    </div>
+
+    <div id="math" style="display: none;">
+        <div class="kotak">
+            <button class="tombol" onclick="tampilBeranda()">← Kembali</button>
+            <h1>Latihan Matematika</h1>
+            <div class="skor">Skor: <span id="skorMath">0</span></div>
+            <div class="kotak-soal" id="soalMath"></div>
+            <div style="text-align: center;">
+                <input type="number" id="jawabanMath" class="input-jawaban" placeholder="?">
+                <button class="tombol" onclick="cekJawabanMath()">Cek</button>
+            </div>
+            <div id="hasilMath"></div>
+        </div>
+    </div>
+
+    <div id="memory" style="display: none;">
+        <div class="kotak">
+            <button class="tombol" onclick="tampilBeranda()">← Kembali</button>
+            <h1>Permainan Ingat-ingatan</h1>
+            <div class="skor">Pasangan: <span id="skorMemory">0</span>/4</div>
+            <div id="kartuMemory" style="text-align: center;"></div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>© 2026 Game Belajar Anak SD</p>
+        <p>Dibuat dengan ❤️ untuk anak-anak Indonesia</p>
+    </div>
+
+    <script src="project.js"></script>
 </body>
 </html>
